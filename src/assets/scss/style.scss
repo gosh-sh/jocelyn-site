@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import './icons.css';
+
+html,
+body,
+#root {
+  @apply h-full text-black text-base bg-gray-light;
+}
+
+.container {
+  @apply max-w-[1440px] mx-auto px-5 md:px-16;
+}
+
+.header-home {
+  /* background-image: url('/images/header-bg-woman.webp'),
+    linear-gradient(0deg, #fafafd -2%, transparent 100%),
+    url('/images/header-bg-left.png'), url('/images/header-bg-right.webp');
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: 92% 25%, 0% 0%, 0% 0%, 100% 0%;
+  background-size: 27%, cover, cover, contain; */
+  background-image: url('/images/header-bg-woman.webp');
+  background-repeat: no-repeat;
+  background-position: 105% 92%;
+  background-size: 60%;
+
+  @media (min-width: 768px) {
+    background-image: url('/images/header-bg-woman.webp'),
+      linear-gradient(0deg, #fafafd -2%, transparent 100%),
+      url('/images/header-bg-left.png'), url('/images/header-bg-right.webp');
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-position: 92% 25%, 0% 0%, 0% 0%, 100% 0%;
+    background-size: 27%, cover, cover, contain;
+  }
+}
+
+.header-sub {
+  background-image: url('/images/header-bg-woman.webp');
+  background-repeat: no-repeat;
+  background-position: 110% 130%;
+  background-size: 60%;
+
+  @media (min-width: 768px) {
+    background-image: url('/images/header-bg-woman.webp');
+    background-repeat: no-repeat;
+    background-position: 102% 40%;
+    background-size: 37%;
+  }
+}
