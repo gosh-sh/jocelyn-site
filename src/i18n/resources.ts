@@ -156,7 +156,7 @@ export const resources = {
         },
         team2: {
           role: 'CEO GOSH',
-          name: 'Mitya Goroshevsky',
+          name: 'Mitja Goroshevsky',
           text0:
             'In the scientific environment that I would like to create, researchers would be rewarded for their efforts, and their commitments recorded and made open to the world. It is extremely important to facilitate independent and unbiased feedback from the scientific community. Both scientists and open-source developers should be sure that the code works, that it is safe, and that it delivers against the goals of the research. That is the scientific advance as I understand it.',
           text1: '',
@@ -355,7 +355,7 @@ export const resources = {
         },
         team2: {
           role: 'CEO GOSH',
-          name: 'Mitya Goroshevsky',
+          name: 'Mitja Goroshevsky',
           text0:
             'In the scientific environment that I would like to create, researchers would be rewarded for their efforts, and their commitments recorded and made open to the world. It is extremely important to facilitate independent and unbiased feedback from the scientific community. Both scientists and open-source developers should be sure that the code works, that it is safe, and that it delivers against the goals of the research. That is the scientific advance as I understand it.',
           text1: '',
