@@ -8,6 +8,19 @@ export const usePageScrollTop = () => {
   }, [])
 }
 
+export const useScrollToRef = () => {
+  const scrollTo = (ref: any, options: { top?: number }) => {
+    const { top } = options
+    window.scrollTo({
+      top: top || ref.offsetTop,
+      left: 0,
+      behavior: 'smooth',
+    })
+  }
+
+  return scrollTo
+}
+
 export const useJoinDao = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
@@ -83,4 +96,26 @@ export const useSubmitProject = () => {
   }
 
   return { submitProject }
+}
+
+export const useCreateReviewer = () => {
+  const createReviewer = async (data: {
+    name: string
+    email: string
+    skill: string
+    bio: string
+  }) => {
+    const { name, email, skill, bio } = data
+    const { error } = await supabase.from('jocelyn_reviewer').insert({
+      name,
+      email,
+      skill,
+      bio,
+    })
+    if (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  return { createReviewer }
 }

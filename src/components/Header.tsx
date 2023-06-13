@@ -4,10 +4,12 @@ import Menu from './Menu'
 import { Heading1 } from './Headings'
 import { Trans } from 'react-i18next'
 
-type THeaderProps = React.HTMLAttributes<HTMLDivElement>
+type THeaderProps = React.HTMLAttributes<HTMLDivElement> & {
+  menu?: JSX.Element
+}
 
 const Header = (props: THeaderProps) => {
-  const { children } = props
+  const { children, menu } = props
 
   return (
     <div className="relative lg:pb-32">
@@ -28,7 +30,7 @@ const Header = (props: THeaderProps) => {
         </div>
 
         <div className="block w-full my-9 xl:my-0 xl:absolute xl:top-[73%]">
-          <Menu />
+          {menu || <Menu />}
         </div>
 
         <div

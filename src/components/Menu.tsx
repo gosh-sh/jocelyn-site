@@ -55,7 +55,12 @@ const schema = yup
   })
   .required()
 
-const Menu = () => {
+type TMenuProps = {
+  btnAfter?: JSX.Element
+}
+
+const Menu = (props: TMenuProps) => {
+  const { btnAfter } = props
   const ref = useRef<HTMLDivElement | null>(null)
   const [sticky, setSticky] = useState<boolean>(false)
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
@@ -150,9 +155,11 @@ const Menu = () => {
         )}
       >
         <div className="grow lg:grow-0">
-          <Button theme="light" className="w-full lg:w-auto" onClick={onSupportToggle}>
-            {t('menu.support_us')}
-          </Button>
+          {btnAfter || (
+            <Button theme="light" className="w-full lg:w-auto" onClick={onSupportToggle}>
+              {t('menu.support_us')}
+            </Button>
+          )}
         </div>
 
         {/* <div className="hidden xl:block">
