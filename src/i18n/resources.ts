@@ -5,6 +5,7 @@ export const resources = {
         project: 'Submit a project',
         expertise: 'Share expertise',
         sponsor: 'Become a sponsor',
+        reviewer: 'Become a reviewer',
         team: 'Team',
         support_us: 'Support us',
       },
@@ -98,6 +99,14 @@ export const resources = {
           title: 'What is our next step?',
           subtitle:
             'Creating an autonomous organization focusing on both the reviewing process and funding research.',
+        },
+        reviewer_form: {
+          title: 'Become a reviewer',
+          field_name: 'Name',
+          field_email: 'Email',
+          field_skill: "I'm an expert in",
+          field_bio: 'Short bio',
+          btn_submit: 'Send for submit',
         },
       },
       sponsor_page: {
@@ -195,6 +204,7 @@ export const resources = {
         subscribed: 'You have subscribed!',
         wait: 'Wait, please...',
         project_submitted: 'Project submitted!',
+        reviewer_submitted: 'Reviewer submitted!',
       },
     },
   },
@@ -204,6 +214,7 @@ export const resources = {
         project: 'Submit a project',
         expertise: 'Share expertise',
         sponsor: 'Become a sponsor',
+        reviewer: 'Become a reviewer',
         team: 'Team',
         support_us: 'Support us',
       },
@@ -297,6 +308,14 @@ export const resources = {
           title: 'What is our next step?',
           subtitle:
             'Creating an autonomous organization focusing on both the reviewing process and funding research.',
+        },
+        reviewer_form: {
+          title: 'Become a reviewer',
+          field_name: 'Name',
+          field_email: 'Email',
+          field_skill: "I'm an expert in",
+          field_bio: 'Short bio',
+          btn_submit: 'Send for submit',
         },
       },
       sponsor_page: {
@@ -394,6 +413,7 @@ export const resources = {
         subscribed: 'You have subscribed!',
         wait: 'Wait, please...',
         project_submitted: 'Project submitted!',
+        reviewer_submitted: 'Reviewer submitted!',
       },
     },
   },

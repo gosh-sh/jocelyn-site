@@ -12,10 +12,17 @@ import {
   SecondaryBlockRight,
 } from '../components/SecondaryBlock'
 import TeamBlock from '../components/TeamBlock'
-import { useJoinDao, usePageScrollTop, useSubmitProject } from '../hooks/hooks'
+import {
+  useJoinDao,
+  usePageScrollTop,
+  useScrollToRef,
+  useSubmitProject,
+} from '../hooks/hooks'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import Menu from '../components/Menu'
+import { useRef } from 'react'
 
 const researcher = [
   i18n.t('project_page.researcher.block0'),
@@ -42,6 +49,15 @@ const ProjectScreen = () => {
     resolver: yupResolver(schema),
   })
   const { submitProject } = useSubmitProject()
+  const formRef = useRef<HTMLDivElement>(null)
+  const scrollToRef = useScrollToRef()
+
+  const onProjectFormScrollTo = () => {
+    const current = formRef.current
+    if (current) {
+      scrollToRef(current, { top: current.offsetTop - 100 })
+    }
+  }
 
   const onProjectFormSubmit = async (data: any) => {
     try {
@@ -57,7 +73,21 @@ const ProjectScreen = () => {
   return (
     <>
       <Container>
-        <Header>
+        <Header
+          menu={
+            <Menu
+              btnAfter={
+                <Button
+                  theme="light"
+                  className="w-full lg:w-auto"
+                  onClick={onProjectFormScrollTo}
+                >
+                  {t('menu.project')}
+                </Button>
+              }
+            />
+          }
+        >
           <h2 className="text-2xl">{t('project_page.subheader.title')}</h2>
           <div className="mt-8 text-xl">{t('project_page.subheader.text0')}</div>
           <div className="mt-6 text-xl">{t('project_page.subheader.text1')}</div>
@@ -103,7 +133,7 @@ const ProjectScreen = () => {
         </div>
       </Container>
 
-      <Container className="mt-20 md:mt-36">
+      <Container className="mt-20 md:mt-36" ref={formRef}>
         <SecondaryBlock className="!flex-col !items-start">
           <Heading2>{t('project_page.submit_form.title')}</Heading2>
           <div className="mt-10 w-full">
