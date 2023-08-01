@@ -57,14 +57,15 @@ const schema = yup
 
 type TMenuProps = {
   btnAfter?: JSX.Element
+  isSupportShow?: boolean
 }
 
 const Menu = (props: TMenuProps) => {
-  const { btnAfter } = props
+  const { btnAfter, isSupportShow = false } = props
   const ref = useRef<HTMLDivElement | null>(null)
   const [sticky, setSticky] = useState<boolean>(false)
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
-  const [isSupportOpen, setSupportOpen] = useState<boolean>(false)
+  const [isSupportOpen, setSupportOpen] = useState<boolean>(isSupportShow)
   const { t } = useTranslation()
   const {
     register,
@@ -116,6 +117,10 @@ const Menu = (props: TMenuProps) => {
       document.getElementsByTagName('body').item(0)?.classList.remove('overflow-hidden')
     }
   }, [isMobileMenuOpen, isSupportOpen])
+
+  useEffect(() => {
+    setSupportOpen(isSupportShow)
+  }, [isSupportShow])
 
   return (
     <div
