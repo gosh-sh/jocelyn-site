@@ -119,3 +119,23 @@ export const useCreateReviewer = () => {
 
   return { createReviewer }
 }
+
+export const useCreateSSF = () => {
+  const createSSF = async (data: {
+    name: string
+    email: string
+    description: string
+  }) => {
+    const { name, email, description } = data
+    const { error } = await supabase.from('jocelyn_ssf').insert({
+      name,
+      email,
+      description,
+    })
+    if (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  return { createSSF }
+}
