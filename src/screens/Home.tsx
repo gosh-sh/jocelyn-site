@@ -1,15 +1,19 @@
 import i18n from '../i18n/i18n'
 import { useTranslation, Trans } from 'react-i18next'
-import { Button, ButtonLink } from '../components/Buttons'
+import { Button, ButtonLink, ButtonRound } from '../components/Buttons'
 import Container from '../components/Container'
 import Logo from '../components/Logo'
 import Menu from '../components/Menu'
 import OfferBlock from '../components/OfferBlock'
 import { routes } from '../routes'
 import { Heading1, Heading2 } from '../components/Headings'
-import { usePageScrollTop } from '../hooks/hooks'
+import { useCreateSSF, usePageScrollTop } from '../hooks/hooks'
 import ImageBlock from '../components/ImageBlock'
 import { useState } from 'react'
+import classNames from 'classnames'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const actions = [
   { content: i18n.t('home_page.actions.action0'), href: routes.project },
@@ -17,13 +21,44 @@ const actions = [
   { content: i18n.t('home_page.actions.action2'), href: routes.sponsor },
 ]
 
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    description: yup.string().required(),
+  })
+  .required()
+
 const HomeScreen = () => {
   usePageScrollTop()
   const { t } = useTranslation()
   const [isSupportOpen, setSupportOpen] = useState<boolean>(false)
+  const [isSSFOpen, setSSFOpen] = useState<boolean>(false)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({ resolver: yupResolver(schema) })
+  const { createSSF } = useCreateSSF()
 
   const onSupportToggle = () => {
     setSupportOpen(!isSupportOpen)
+  }
+
+  const onSSFToggle = () => {
+    setSSFOpen(!isSSFOpen)
+  }
+
+  const onSSFSubmit = async (data: any) => {
+    try {
+      await createSSF(data)
+      reset()
+      alert('Success!')
+    } catch (e: any) {
+      console.error(e.message)
+      alert(e.message)
+    }
   }
 
   return (
@@ -150,7 +185,83 @@ const HomeScreen = () => {
         </div>
       </Container>
 
-      <Container className="mt-20 md:mt-72">
+      <Container className="mt-36">
+        <div className="flex flex-wrap justify-between gap-x-4 gap-y-16">
+          <div className="basis-full lg:basis-5/12">
+            <Heading2 className="max-w-full lg:max-w-[25rem]">
+              Scientifiques Sans Frontières: SSF
+            </Heading2>
+            <div className="mt-4 text-xl max-w-full lg:max-w-[27.25rem]">
+              Introducing SSF, a unified platform for scientists to share their expertise.
+            </div>
+
+            <hr className="my-10 border-black" />
+
+            <h3 className="text-2xl">Why is it crucial?</h3>
+            <div className="text-lg lg:text-base mt-4">
+              Scientists worldwide often struggle to secure adequate financial backing.
+              While grants, universities, and NGOs typically offer support, many
+              researchers lack the means to monetize their expertise offering free
+              consultations and spending precious time.
+            </div>
+
+            <div className="mt-8">
+              <Button
+                theme="dark"
+                arrow
+                className="whitespace-nowrap"
+                onClick={onSSFToggle}
+              >
+                Fill the form
+              </Button>
+            </div>
+          </div>
+          <div className="basis-full lg:basis-6/12 border border-black rounded-block px-6 lg:px-12 py-12 lg:py-16">
+            <div className="text-xl">
+              SSF aims to provide a legally sound decentralized space for knowledge
+              exchange, irrespective of a scientist's status or age
+            </div>
+            <div className="mt-8 text-lg">
+              Imagine it as a Patreon for Scientists, featuring tiers that grant general
+              public access to services like
+            </div>
+            <div className="mt-20 flex flex-wrap items-start justify-between gap-x-4 gap-y-8">
+              <div className="basis-5/12 md:basis-0 grow text-start md:text-center">
+                <div className="text-6xl">
+                  <i className="icon icon-qa" />
+                </div>
+                <div className="mt-4 text-lg">
+                  Q&A
+                  <br />
+                  sessions
+                </div>
+              </div>
+              <div className="basis-5/12 md:basis-0 grow text-start md:text-center">
+                <div className="text-6xl">
+                  <i className="icon icon-virtual" />
+                </div>
+                <div className="mt-4 text-lg">
+                  One-on-one
+                  <br />
+                  virtual meetings
+                </div>
+              </div>
+              <div className="basis-5/12 md:basis-0 grow text-start md:text-center">
+                <div className="text-6xl">
+                  <i className="icon icon-mentor" />
+                </div>
+                <div className="mt-4 text-lg">
+                  Personal
+                  <br />
+                  mentoring
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+
+      <Container className="mt-20 md:mt-64">
         <div className="grid grid-rows-auto grid-flow-col gap-4">
           <div className="col-start-1 row-start-1 py-12">
             <Heading2 className="max-w-[22rem] mx-auto text-center">
@@ -190,6 +301,94 @@ const HomeScreen = () => {
           </div>
         </div>
       </Container>
+
+      {/* SSF modal */}
+      <div
+        className={classNames(
+          'fixed top-0 right-0 w-screen lg:w-6/12 xl:w-5/12 h-screen bg-black overflow-auto',
+          'flex flex-col gap-y-4 z-10',
+          'transition-translate duration-200 lg:rounded-l-3xl',
+          isSSFOpen ? 'translate-x-0' : 'translate-x-full',
+        )}
+      >
+        <div className="grow p-8 md:p-16 lg:py-8 xl:p-16">
+          <div className="relative">
+            <div
+              className={classNames(
+                'absolute right-0 top-0 md:-right-10 md:-top-10 text-end mb-6',
+              )}
+            >
+              <ButtonRound
+                theme="dark"
+                className="h-[3.375rem] w-[3.375rem] text-lg"
+                onClick={onSSFToggle}
+              >
+                <div className="flex items-center justify-center w-full h-full">
+                  <i className={classNames('icon icon-arrow-end rotate-90')} />
+                </div>
+              </ButtonRound>
+            </div>
+            <Heading2 className="text-gray-light">Why are you interested?</Heading2>
+          </div>
+
+          <div className="mt-10">
+            <form onSubmit={handleSubmit(onSSFSubmit)}>
+              <div>
+                <input
+                  {...register('name')}
+                  type="text"
+                  className="border border-gray-light rounded-[3.5rem] px-9 py-4 bg-black text-gray-light w-full"
+                  placeholder="Name"
+                  autoComplete="off"
+                />
+                <p className="text-sm text-gray-light mt-1 pl-6">
+                  {errors.name?.message?.toString()}
+                </p>
+              </div>
+              <div className="mt-6">
+                <input
+                  {...register('email')}
+                  type="email"
+                  className="border border-gray-light rounded-[3.5rem] px-9 py-4 bg-black text-gray-light w-full"
+                  placeholder="Email"
+                  autoComplete="off"
+                />
+                <p className="text-sm text-gray-light mt-1 pl-6">
+                  {errors.email?.message?.toString()}
+                </p>
+              </div>
+              <div className="mt-6">
+                <textarea
+                  {...register('description')}
+                  className="border border-gray-light rounded-[2rem] px-9 py-9 bg-black text-gray-light w-full"
+                  placeholder="Describe your interest in that"
+                  autoComplete="off"
+                  rows={8}
+                />
+                <p className="text-sm text-gray-light mt-1 pl-6">
+                  {errors.description?.message?.toString()}
+                </p>
+              </div>
+              <div className="mt-16">
+                <Button
+                  type="submit"
+                  theme="dark"
+                  className={classNames(
+                    'px-6 py-4 !text-[#616264] w-full',
+                    'hover:!text-gray-light hover:!bg-transparent',
+                    'whitespace-nowrap',
+                  )}
+                  disabled={isSubmitting}
+                  loading={isSubmitting}
+                >
+                  Send request
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {/* /SSF modal */}
     </>
   )
 }
